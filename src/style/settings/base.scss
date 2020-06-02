@@ -1,0 +1,25 @@
+*{
+    box-sizing: border-box;
+}
+html {
+    font-size: 62.5%;
+    color:#776E65;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: sans-serif;
+
+  }
+button{
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+button:disabled{
+    cursor: default;
+  }
+h1{
+  margin-bottom:0px;
+}
+h4{
+  margin-top: 0px;
+  margin-bottom: 1px;
+}

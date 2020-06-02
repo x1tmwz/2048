@@ -1,0 +1,21 @@
+.gridC{
+  display: grid;
+  grid-template-columns: 2rem 2rem 2rem 2rem;
+  background: #CDC1B4;
+
+  border: 1px solid  #BBADA0;
+  
+}
+.gridR{
+    display: grid;
+    grid-template-rows: 2rem 2rem 2rem 2rem;
+}
+
+#gridItem{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid  #BBADA0;
+    border-bottom: none;
+    animation-delay: 2s;
+}
