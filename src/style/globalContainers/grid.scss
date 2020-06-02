@@ -1,21 +1,29 @@
 .gridC{
   display: grid;
-  grid-template-columns: 2rem 2rem 2rem 2rem;
+  grid-template-columns: 6rem 6rem 6rem 6rem;
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 3rem 3rem 3rem 3rem;
+  }
   background: #CDC1B4;
 
-  border: 1px solid  #BBADA0;
+  border: 0.2rem solid  #BBADA0;
+  border-bottom: 0.4rem solid  #BBADA0;
   
 }
 .gridR{
     display: grid;
-    grid-template-rows: 2rem 2rem 2rem 2rem;
+    grid-template-rows: 6rem 6rem 6rem 6rem;
+    @media only screen and (max-width: 600px) {
+      grid-template-rows: 3rem 3rem 3rem 3rem;
+    }
+    
 }
 
 #gridItem{
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid  #BBADA0;
+    border: 0.2rem solid  #BBADA0;
     border-bottom: none;
-    animation-delay: 2s;
+    font-size: 2.5rem;
 }
