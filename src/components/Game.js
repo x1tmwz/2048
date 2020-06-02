@@ -57,7 +57,7 @@ const Game = () => {
           <Board board={board.map} />
         </div>
       </div>
-      {winner && <h1>Winner!!!</h1>}
+      {winner ? <h1>Winner!!!</h1>:<p>To play the game click on him and use arrow keys </p>}
     </div>
 
 
