@@ -19,4 +19,4 @@ class Pose {
         this.y = y;
     }
 }
-module.exports={Box,Pose};
+export {Box,Pose};

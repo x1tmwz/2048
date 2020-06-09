@@ -1,4 +1,4 @@
-const { Box, Pose } = require('./utils/helpClasses');
+import {Box,Pose} from './utils/helpClasses'
 const {pickRandomNumber, tempArray } = require('./utils/helpFunctions');
 
 
