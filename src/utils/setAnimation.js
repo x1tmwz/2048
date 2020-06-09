@@ -28,11 +28,9 @@ const setAnimation = (direction, matrix = []) => {
                         }
                     }
                     if (delta !== 0 && cellNextToMe.value ===0) {
-                        document.getElementsByClassName(index)[0].style.animation = `${direction} 200ms ease 100ms`;
+                        document.getElementsByClassName(index)[0].style.animation = `${direction} 300ms ease 100ms`;
                     }
-
                 }
-
             }
         }
     }
@@ -59,17 +57,14 @@ const setAnimation = (direction, matrix = []) => {
                         }
                     }
                     if (delta !== 0 && cellNextToMe.value === 0) {
-                        document.getElementsByClassName(index)[0].style.animation = `${direction} 200ms ease 100ms`;
+                        document.getElementsByClassName(index)[0].style.animation = `${direction} 300ms ease 100ms`;
                     }
-
                 }
-
             }
         }
-
     }
-
-
-
 }
+
+
+
 export { setAnimation, down, up, left, right };

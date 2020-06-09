@@ -13,7 +13,7 @@ const startGame = (size) => {
     for (let y = 0; y < size; y++) {
         let row = []
         for (let x = 0; x < size; x++) {
-            row.push(new Box(0, new Pose(x, y), new Pose(x, y)));
+            row.push(new Box(0));
         }
         game.push(row);
     }
@@ -96,17 +96,19 @@ const arrange = (arr) => {
             j--;
         }
     }
-    return temp;
+    for (let i = 0; i < length; i++) {
+        arr[i] = temp[i];
+    }
+    return arr;
 }
 const merge = (arr) => {
     const length = arr.length
-    for (let i = 1; i < length; i++) {
-        if (arr[i].value === arr[i - 1].value) {
+    for (let i = length - 1,j=i-1; j >= 0; i--,j--) {
+        if (arr[i].value === arr[j].value) {
             arr[i].value = arr[i].value * 2;
             arr[i].merge=true;
             score = score + arr[i].value;
-            arr[i - 1].value = 0;
-            i++
+            arr[j].value = 0;
         }
     }
     return arr;

@@ -21,6 +21,7 @@ const Game = () => {
   const [board, setBoard] = useState({ map: startGame(4) });
   const [totalScore, setTotaleScore] = useState(score);
   const [winner, setWinner] = useState(false);
+  const [num,setNum]=useState(1);
 
   const keyHandler = (e) => {
     e.preventDefault();
