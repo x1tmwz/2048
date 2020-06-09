@@ -23,6 +23,7 @@ const Game = () => {
   const [winner, setWinner] = useState(false);
 
   const keyHandler = (e) => {
+    e.preventDefault();
     if (isLoser(board.map)) {
       alert("You lose start a new game");
       return;
