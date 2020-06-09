@@ -1,0 +1,25 @@
+@keyframes right{
+    0%   {left:6rem; opacity: 1;}
+    100%  {left:12rem; opacity: 0;}  
+}
+@keyframes left{
+    0%   {right:6rem; opacity: 1;}
+    100%  {right:12rem; opacity: 0;}
+}
+@keyframes down{
+    0%   {top:6rem; opacity: 1;}
+    100%  {top:12rem; opacity: 0;}
+}
+@keyframes up{
+    0%   {bottom:6rem; opacity: 1;}
+    100%  {bottom:12rem; opacity: 0;}
+}
+@keyframes pop {
+    0% {transform: scale(0);}
+    50% {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}
+@keyframes new {
+    0% {transform: scale(0);opacity: 0;}
+    100% {transform: scale(1);opacity: 1;}
+}

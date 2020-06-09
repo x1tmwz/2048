@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const Cell = ({ number, id }) => {
+
+const Cell = ({ number, id,isNew,isMerge }) => {
     const [scale, setScale] = useState(1);
     const scaleFix = () => {
         const view = document.getElementsByClassName(id)[0];
@@ -52,10 +53,33 @@ const Cell = ({ number, id }) => {
         }
     }
     useEffect(scaleFix, [number])
+    const setAnimationName = () => {
+        if(isMerge){
+            return "pop"
+        }
+        if(isNew){
+            return "new"
+        }
+        return ""
+
+    }
+
     return (
-        <div className={id} id="gridItem" style={{ background: color(number) }}>
-            <span style={{ transform: `scale(${scale})` }}>{number !== 0 ? number : ""}</span>
+        <div className="itemBox">
+            <div
+                className={id}
+                id="gridItem"
+                style={{
+                    background: color(number),
+                    position: "relative",
+                    animation:`${setAnimationName()} 200ms ease 100ms`
+
+                }} >
+                <span style={{ transform: `scale(${scale})` }}>{number !== 0 ? number : ""}</span>
+            </div>
+
         </div>
+
     );
 }
 export default Cell;

@@ -19,14 +19,17 @@
     
 }
 
+.itemBox{
+  display: flex;
+  border: 0.2rem solid  #BBADA0;
+  border-bottom: none;
+}
+
 #gridItem{
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 0.2rem solid  #BBADA0;
-    border-bottom: none;
+    flex-grow: 1;
     font-size: 2.5rem;
-    @media only screen and (max-width: 600px) {
-      font-size: 1rem;
-    }
+    animation-fill-mode: backwards;
 }

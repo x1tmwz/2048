@@ -9,7 +9,7 @@ const Board = ({ board }) => {
                     <div key={rowIndex} className="gridC">
                         {row.map((cell, cellIndex) => {
                             return (
-                                <Cell number={cell} key={parseInt(rowIndex) + parseInt(cellIndex)} id={parseInt(rowIndex)*4 + parseInt(cellIndex)}/>
+                                <Cell number={cell.value} isNew={cell.new} isMerge={cell.merge} key={parseInt(rowIndex) + parseInt(cellIndex)} id={parseInt(rowIndex)*4 + parseInt(cellIndex)}/>
                                 )
                         })}
                     </div>)
