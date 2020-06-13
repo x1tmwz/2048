@@ -1,30 +1,9 @@
-import {Box,Pose} from './utils/helpClasses'
-const {pickRandomNumber, tempArray } = require('./utils/helpFunctions');
-
-
+import {Box,Pose} from './utils/helpClasses';
+import {tempArray,pickRandomNumber,copyBoard} from './utils/helpFunctions';
 
 let score = 0;
 const zeroScore = () => {
     score = 0;
-}
-
-const startGame = (size) => {
-    const game = [];
-    for (let y = 0; y < size; y++) {
-        let row = []
-        for (let x = 0; x < size; x++) {
-            row.push(new Box(0));
-        }
-        game.push(row);
-    }
-    let pose1 = new Pose(pickRandomNumber(4), pickRandomNumber(4))
-    let pose2 = new Pose(pickRandomNumber(4), pickRandomNumber(4))
-    while (pose1.x === pose2.x && pose1.y === pose2.y) {
-        pose1 = new Pose(pickRandomNumber(4), pickRandomNumber(4));
-    }
-    game[pose1.y][pose1.x].value = 2;
-    game[pose2.y][pose2.x].value = 2;
-    return game;
 }
 const isWinner = (matrix = []) => {
     return matrix.find((item) => item.value === 2048);
@@ -50,15 +29,6 @@ const isLoser = (matrix = []) => {
     return true;
 }
 
-const boardToString = (matrix = []) => {
-    let str = "";
-    for(let i =0;i<matrix.length;i++){
-        for(let j=0;j<matrix[i].length;j++){
-            str += matrix[i][j].value
-        }
-    }
-    return str;
-}
 const insertRandomNumber = (matrix = [], xMin, xMax, yMin, yMax) => {
     let options = [];
     for (let i = 0; i < matrix.length; i++) {
@@ -79,137 +49,119 @@ const insertRandomNumber = (matrix = [], xMin, xMax, yMin, yMax) => {
     const randomNumber = pickRandomNumber(options.length);
     const value = pickRandomNumber(3) < 2 ? 2 : 4;
     const chosen = options[randomNumber];
-    matrix[chosen.x][chosen.y].value = value;
-    matrix[chosen.x][chosen.y].new =true;
-    return matrix;
+    const copy = copyBoard(matrix);
+    copy[chosen.x][chosen.y].value = value;
+    copy[chosen.x][chosen.y].new = true;
+    return copy;
 }
 
+const startGame = (size) => {
+    const game = [];
+    for (let y = 0; y < size; y++) {
+        let row = []
+        for (let x = 0; x < size; x++) {
+            row.push(new Box(0));
+        }
+        game.push(row);
+    }
+    let pose1 = new Pose(pickRandomNumber(4), pickRandomNumber(4))
+    let pose2 = new Pose(pickRandomNumber(4), pickRandomNumber(4))
+    while (pose1.x === pose2.x && pose1.y === pose2.y) {
+        pose1 = new Pose(pickRandomNumber(4), pickRandomNumber(4));
+    }
+    game[pose1.y][pose1.x].value = 2;
+    game[pose2.y][pose2.x].value = 2;
+    return game;
+}
 
-
-const arrange = (arr) => {
-    const length = arr.length
-    let j = length - 1;
-    const temp = tempArray(length);
-    for (let i = length - 1; i >= 0; i--) {
+const arrange = (arr = []) => {
+    const arr2 = tempArray(arr.length);
+    for (let i = 0, j = 0; i < arr.length; i++) {
         if (arr[i].value !== 0) {
-            temp[j] = arr[i];
-            j--;
+            arr2[j] = arr[i];
+            j++;
         }
     }
-    for (let i = 0; i < length; i++) {
-        arr[i] = temp[i];
-    }
-    return arr;
+    return arr2;
 }
-const merge = (arr) => {
-    const length = arr.length
-    for (let i = length - 1,j=i-1; j >= 0; i--,j--) {
-        if (arr[i].value === arr[j].value) {
-            arr[i].value = arr[i].value * 2;
-            arr[i].merge=true;
-            score = score + arr[i].value;
-            arr[j].value = 0;
+const merge = (arr = []) => {
+    const copy = arr.slice(0);
+    for (let i = 0, j = i + 1; j < copy.length; i++, j++) {
+        if (copy[i].value !== 0) {
+            if (copy[j].value === copy[i].value) {
+                copy[i].value = copy[i].value * 2;
+                score = score + copy[i].value;
+                copy[i].merge = true;
+                copy[j].value = 0;
+            }
         }
     }
-    return arr;
+    return copy;
+}
 
-}
-const matrixArrange = (arr) => {
-    let fixArray = arrange(arr);
+const doGameLogicOnArray = (arr = [], reverseDirection = false) => {
+    //reverseDirection=true then is left and down if false then is righ and up
+    let fixArray = reverseDirection ? arrange(arr.reverse()) : arrange(arr);
     fixArray = merge(fixArray);
-    fixArray = arrange(fixArray);
-    return fixArray;
-
+    return reverseDirection ? arrange(fixArray).reverse() : arrange(fixArray);
 }
 
-const moveRight = (matrix) => {
-    const board1 = boardToString(matrix);
-    for (let i = 0; i < matrix.length; i++) {
-        let line = tempArray(matrix[i].length);
-        for (let j = 0; j < matrix[i].length; j++) {
-            line[j] = matrix[i][j];
-        }
-        line = matrixArrange(line);
-        for (let j = 0; j < matrix[i].length; j++) {
-            matrix[i][j] = line[j];
-        }
+const moveRight = (matrix = []) => {
+    let copy = copyBoard(matrix);
+    for (let i = 0; i < copy.length; i++) {
+        copy[i] = doGameLogicOnArray(copy[i], true);
     }
-    const board2 = boardToString(matrix);
-    if (board1 === board2) {
-        return matrix;
-    }
-    return insertRandomNumber(matrix, 0, 3, 0, 1);
+    return copy;
 }
-const moveLeft = (matrix) => {
-    const board1 = boardToString(matrix);
-    for (let i = 0; i < matrix.length; i++) {
-        let line = tempArray(matrix[i].length);
-        for (let j = 0; j < matrix[i].length; j++) {
-            line[matrix[i].length - 1 - j] = matrix[i][j];
-        }
-        line = matrixArrange(line);
-        for (let j = 0; j < matrix[i].length; j++) {
-            matrix[i][j] = line[matrix[i].length - 1 - j];
-        }
+const moveLeft = (matrix = []) => {
+    const copy = copyBoard(matrix);
+    for (let i = 0; i < copy.length; i++) {
+        copy[i] = doGameLogicOnArray(copy[i]);
     }
-    const board2 = boardToString(matrix);
-    if (board1 === board2) {
-        return matrix;
-    }
-    return insertRandomNumber(matrix, 0, 3, 2, 3);
+    return copy;
 }
-const moveDown = (matrix) => {
-    const board1 = boardToString(matrix);
-    for (let j = 0; j < matrix.length; j++) {
-        let column = tempArray(matrix[j].length);
-        for (let i = 0; i < matrix[j].length; i++) {
-            column[i] = matrix[i][j];
+const moveUp = (matrix = []) => {
+    const copy = copyBoard(matrix);
+    let column = [];
+    for (let i = 0; i < copy.length; i++) {
+        for (let j = 0; j < copy.length; j++) {
+            column.push(copy[j][i]);
         }
-        column = matrixArrange(column);
-        for (let i = 0; i < matrix[j].length; i++) {
-            matrix[i][j] = column[i];
+        column = doGameLogicOnArray(column);
+        for (let j = 0; j < column.length; j++) {
+            copy[j][i] = column[j];
         }
+        column = [];
     }
-    const board2 = boardToString(matrix);
-    if (board1 === board2) {
-        return matrix;
-    }
-    return insertRandomNumber(matrix, 0, 1, 0, 3)
+    return copy;
 }
-
-const moveUp = (matrix) => {
-    const board1 = boardToString(matrix);
-    for (let j = 0; j < matrix.length; j++) {
-        let column = tempArray(matrix[j].length);
-        for (let i = 0; i < matrix[j].length; i++) {
-            column[matrix[j].length - 1 - i] = matrix[i][j];
+const moveDown = (matrix = []) => {
+    const copy = copyBoard(matrix);
+    let column = [];
+    for (let i = 0; i < copy.length; i++) {
+        for (let j = 0; j < copy.length; j++) {
+            column.push(copy[j][i]);
         }
-        column = matrixArrange(column);
-        for (let i = 0; i < matrix[j].length; i++) {
-            matrix[i][j] = column[matrix[j].length - 1 - i];
+        column = doGameLogicOnArray(column, true);
+        for (let j = 0; j < column.length; j++) {
+            copy[j][i] = column[j];
         }
+        column = [];
     }
-    const board2 = boardToString(matrix);
-    if (board1 === board2) {
-        return matrix;
-    }
-    return insertRandomNumber(matrix, 2, 3, 0, 3);
+    return copy;
 }
-
-
 export {
     startGame,
-    pickRandomNumber,
     moveRight,
     moveLeft,
     moveDown,
     moveUp,
-    isWinner,
     isLoser,
+    isWinner,
     score,
     zeroScore,
+    insertRandomNumber,
 }
-
 
 
 

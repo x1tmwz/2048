@@ -3,62 +3,68 @@ const up = "up";
 const left = "left";
 const right = "right"
 
-
-const setAnimation = (direction, matrix = []) => {
-    if (direction === right || direction === down) {
-        for (let i = matrix.length - 1; i >= 0; i--) {
-            for (let j = matrix[i].length - 1; j >= 0; j--) {
-                if (matrix[i][j].value !== 0) {
-                    const index = (i * matrix.length) + j;
-                    let delta = 0;
-                    let cellNextToMe;
-                    let z;
-                    if (direction === right) {
-                        delta = Math.abs(matrix.length - 1 - j)
-                        z=j+1;
-                        if(z < matrix.length){
-                            cellNextToMe = matrix[i][z];
-                        }
-                    }
-                    if (direction === down) {
-                        delta = Math.abs(matrix.length - 1 - i)
-                        z=i+1;
-                        if(z < matrix.length){
-                            cellNextToMe = matrix[z][j];
-                        }
-                    }
-                    if (delta !== 0 && cellNextToMe.value ===0) {
-                        document.getElementsByClassName(index)[0].style.animation = `${direction} 300ms ease 100ms`;
-                    }
-                }
+const resetAnimation = (matrix = []) => {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            const index = i * matrix.length + j;
+            const animationClass = document.getElementsByClassName(index)[0].classList[1];
+            if (animationClass) {
+                document.getElementsByClassName(index)[0].classList.remove(animationClass)
             }
         }
     }
-    if (direction === left || direction === up) {
-        for (let i = 0; i < matrix.length; i++) {
-            for (let j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j].value !== 0) {
-                    const index = i * matrix.length + j;
-                    let delta = 0;
-                    let cellNextToMe;
-                    let z;
-                    if (direction === up) {
-                        delta = Math.abs(0 - i)
-                        z=i-1;
-                        if(z >= 0){
-                            cellNextToMe = matrix[i][z];
+
+}
+
+const setAnimation = (direction, matrix = []) => {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            if (matrix[i][j].value !== 0) {
+                const index = i * matrix.length + j;
+                let delta = 0;
+                let canContinue=true;
+                if (direction === right) {
+                    for (let z = j + 1; z < matrix[i].length && canContinue; z++) {
+                        if (matrix[i][z].value === 0) {
+                            delta++;
+                        }else{
+                            console.log(down,index,delta)
+                            canContinue= false;
                         }
                     }
-                    if (direction === left) {
-                        delta = Math.abs(0 - j);
-                        z=j-1;
-                        if(z >= 0){
-                            cellNextToMe = matrix[i][z];
+                }
+                if (direction === left) {
+                    for (let z = j - 1; z >= 0 && canContinue; z--) {
+                        if (matrix[i][z].value === 0) {
+                            delta++;
+                        }else{
+                            console.log(down,index,delta)
+                            canContinue= false;
                         }
                     }
-                    if (delta !== 0 && cellNextToMe.value === 0) {
-                        document.getElementsByClassName(index)[0].style.animation = `${direction} 300ms ease 100ms`;
+                }
+                if (direction === up) {
+                    for (let z = i - 1; z >= 0 && canContinue; z--) {
+                        if (matrix[z][j].value === 0) {
+                            delta++;
+                        }else{
+                            console.log(down,index,delta)
+                            canContinue= false;
+                        }
                     }
+                }
+                if (direction === down) {
+                    for (let z = i + 1; z < matrix[j].length && canContinue; z++) {
+                        if (matrix[z][j].value === 0) {
+                            delta++;
+                        }else{
+                            console.log(down,delta,index)
+                            canContinue= false;
+                        }
+                    }
+                }
+                if (delta !== 0) {
+                    document.getElementsByClassName(index)[0].classList.add(`move${direction}${delta}`)
                 }
             }
         }
@@ -66,5 +72,4 @@ const setAnimation = (direction, matrix = []) => {
 }
 
 
-
-export { setAnimation, down, up, left, right };
+export { setAnimation, resetAnimation, down, up, left, right };

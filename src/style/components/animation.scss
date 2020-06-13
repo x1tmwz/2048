@@ -1,36 +1,45 @@
-@keyframes right{
-    0%   {left:0rem; opacity: 1;}
-    100%  {left:12rem; opacity: 0;}  
+@for $x from 0 to 4 {
+    @keyframes right#{$x}{
+        0%   {left:0rem;}
+        100%  {left:$x*6rem;}
+    }
+    @keyframes left#{$x} {
+        0%   {right:0rem;}
+        100%  {right:$x*6rem;}
+    }
+    @keyframes up#{$x} {
+        0%   {bottom:0rem;}
+        100%  {bottom:$x*6rem;}
+    }
+    @keyframes down#{$x} {
+        0%   {top:0rem;}
+        100%  {top:$x*6rem;}
+    }
 }
-@keyframes left{
-    0%   {right:0rem; opacity: 1;}
-    100%  {right:12rem; opacity: 0;}
+@for $x from 0 to 4 {
+    .moveright#{$x}{
+        animation-name: right#{$x};
+        animation-duration:100ms;
+        animation-fill-mode: forwards;
+    }
+    .moveleft#{$x} {
+        animation-name: left#{$x};
+        animation-duration:100ms;
+        animation-fill-mode: forwards;
+    }
+    .moveup#{$x} {
+        animation-name: up#{$x};
+        animation-duration:100ms;
+        animation-fill-mode: forwards;
+    }
+    .movedown#{$x} {
+        animation-name: down#{$x};
+        animation-duration:100ms;
+        animation-fill-mode: forwards;
+    }
 }
-@keyframes down{
-    0%   {top:0rem; opacity: 1;}
-    100%  {top:12rem; opacity: 0;}
-}
-@keyframes up{
-    0%   {bottom:0rem; opacity: 1;}
-    100%  {bottom:12rem; opacity: 0;}
-}
-// @for $x from 0 to 4 {
-//     @for $y from 0 to 4 {
-//         .cell-#{$x * 4 + $y}{
-//             $xPos: (6rem) * ($x);
-//             $yPos: (6rem) * ($y+3);
-//             background-color: "red";
-//             transform: translate($xPos, $yPos);
-//             border: 1px solid black;
-//         }
-//     }
-// }
-// .d{
-//     transition:(200ms ease-in-out);
-//     -webkit-transition-property: -webkit-transform;
-//     -moz-transition-property: -moz-transform;
-//     transition-property: transform;
-// }
+
+
 @keyframes pop {
     0% {transform: scale(0);}
     50% {transform: scale(1.2);}
@@ -39,4 +48,14 @@
 @keyframes new {
     0% {transform: scale(0);opacity: 0;}
     100% {transform: scale(1);opacity: 1;}
+}
+.newBox{
+    animation-duration:100ms;
+    animation-fill-mode: forwards;
+    animation-name: new;
+}
+.merageBox{
+    animation-duration:100ms;
+    animation-fill-mode: forwards;
+    animation-name: new;
 }

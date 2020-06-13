@@ -9,6 +9,16 @@ class Box {
         this.new=false;
     }
 }
+class Range{
+    constructor(min,max) {
+        this.min =min;
+        this.max = max;
+    }
+    set(min,max){
+        this.min =min;
+        this.max = max;
+    } 
+}
 class Pose {
     constructor(x, y) {
         this.x = (x);
@@ -19,4 +29,4 @@ class Pose {
         this.y = y;
     }
 }
-export {Box,Pose};
+export {Box,Pose,Range};

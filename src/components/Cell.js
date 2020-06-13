@@ -56,7 +56,7 @@ const Cell = ({ number, id, isNew, isMerge }) => {
     const setAnimationName = () => {
         if (number !== 0) {
             if (isMerge) {
-                return "new 400ms"
+                return "pop 400ms"
             }
             if (isNew) {
                 return "new 500ms"
@@ -65,7 +65,6 @@ const Cell = ({ number, id, isNew, isMerge }) => {
         return ""
 
     }
-
     return (
         <div className="itemBox">
             <div
@@ -74,8 +73,7 @@ const Cell = ({ number, id, isNew, isMerge }) => {
                 style={{
                     background: color(number),
                     position: "relative",
-                    animation: `${setAnimationName()}`
-
+                    animation:setAnimationName()
                 }} >
                 <span style={{ transform: `scale(${scale})` }}>{number !== 0 ? number : ""}</span>
             </div>
