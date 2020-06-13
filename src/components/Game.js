@@ -69,7 +69,7 @@ const Game = () => {
       setTimeout(() => {
         setBoard(insertRandomNumber(newBoard, xRange.min, xRange.max, yRange.min, yRange.max));
         resetAnimation(newBoard);
-      }, 100)
+      }, 150)
      
     } 
 

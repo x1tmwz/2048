@@ -19,22 +19,22 @@
 @for $x from 0 to 4 {
     .moveright#{$x}{
         animation-name: right#{$x};
-        animation-duration:100ms;
+        animation-duration:150ms;
         animation-fill-mode: forwards;
     }
     .moveleft#{$x} {
         animation-name: left#{$x};
-        animation-duration:100ms;
+        animation-duration:150ms;
         animation-fill-mode: forwards;
     }
     .moveup#{$x} {
         animation-name: up#{$x};
-        animation-duration:100ms;
+        animation-duration:150ms;
         animation-fill-mode: forwards;
     }
     .movedown#{$x} {
         animation-name: down#{$x};
-        animation-duration:100ms;
+        animation-duration:150ms;
         animation-fill-mode: forwards;
     }
 }

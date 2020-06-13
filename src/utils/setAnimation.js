@@ -28,7 +28,6 @@ const setAnimation = (direction, matrix = []) => {
                         if (matrix[i][z].value === 0) {
                             delta++;
                         }else{
-                            console.log(down,index,delta)
                             canContinue= false;
                         }
                     }
@@ -38,7 +37,6 @@ const setAnimation = (direction, matrix = []) => {
                         if (matrix[i][z].value === 0) {
                             delta++;
                         }else{
-                            console.log(down,index,delta)
                             canContinue= false;
                         }
                     }
@@ -48,7 +46,6 @@ const setAnimation = (direction, matrix = []) => {
                         if (matrix[z][j].value === 0) {
                             delta++;
                         }else{
-                            console.log(down,index,delta)
                             canContinue= false;
                         }
                     }
@@ -58,7 +55,6 @@ const setAnimation = (direction, matrix = []) => {
                         if (matrix[z][j].value === 0) {
                             delta++;
                         }else{
-                            console.log(down,delta,index)
                             canContinue= false;
                         }
                     }
